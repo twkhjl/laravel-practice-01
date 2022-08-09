@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Listing;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('listings', [
+        'header' => 'latest listings',
+        'listings' => Listing::all(),
+    ]);
+})->name('listings');
 
+Route::get('/{id}', function ($id) {
+    // dd(Listing::find($id));
+    return view('listing', [
+        'listing' => Listing::find($id),
+        'id' =>$id,
+    ]);
+})->name('listing');
