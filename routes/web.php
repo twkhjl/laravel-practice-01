@@ -16,16 +16,23 @@ use App\Models\Listing;
 */
 
 Route::get('/', function () {
-    return view('listings', [
-        'header' => 'latest listings',
-        'listings' => Listing::all(),
-    ]);
-})->name('listings');
+    return redirect()->route('listings.index');
+});
 
-Route::get('/{id}', function ($id) {
-    // dd(Listing::find($id));
-    return view('listing', [
-        'listing' => Listing::find($id),
-        'id' =>$id,
-    ]);
-})->name('listing');
+
+Route::prefix('listings')->group(function () {
+    Route::get('/', function () {
+        return view('listings', [
+            'header' => 'latest listings',
+            'listings' => Listing::all(),
+        ]);
+    })->name('listings.index');
+
+    Route::get('/{id}', function ($id) {
+        // dd(Listing::find($id));
+        return view('listing', [
+            'listing' => Listing::find($id),
+            'id' => $id,
+        ]);
+    })->name('listings.show');
+});

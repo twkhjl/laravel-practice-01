@@ -4,9 +4,9 @@
 @unless(count($listings) == 0)
 
     @foreach ($listings as $listing)
-        <a href={{ route('listing',['id'=>$listing['id']]) }}><h2>{{ $listing['title'] }}</h2></a>
+        <a href={{ route('listings.show',['id'=>$listing['id']]) }}><h2>{{ $listing['title'] }}</h2></a>
 
-        <div>{{ $listing['content'] }}</div>
+        <div>{{ $listing['description'] }}</div>
     @endforeach
 @else
     <div>no listings found...</div>
