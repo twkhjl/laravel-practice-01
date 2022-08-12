@@ -28,11 +28,39 @@ Route::prefix('listings')->group(function () {
         ]);
     })->name('listings.index');
 
-    Route::get('/{id}', function ($id) {
-        // dd(Listing::find($id));
-        return view('listing', [
-            'listing' => Listing::find($id),
-            'id' => $id,
+    // Route::get('/id/{id}', function ($id) {
+    //     // dd(Listing::find($id));
+    //     return view('listing', [
+    //         'listing' => Listing::find($id),
+    //         'id' => $id,
+    //     ]);
+    // })->name('listings.show');
+
+
+
+
+    // route model binding
+    // ===================================
+    // 綁定前:
+
+    // Route::get('/id/{id}',function($id){
+    //     $listing = Listing::find($id);
+    //     if($listing){
+    //         return view('listing',
+    //         ['listing'=>$listing]
+    //     );
+    //     }else{
+    //         abort('404');
+    //     };
+    // })->name('listings.show');
+
+    // 綁定後(兩段程式碼效果相同):
+    Route::get('/id/{listing}',function(Listing $listing){
+        return view('listing',[
+            'listing'=>$listing
         ]);
     })->name('listings.show');
+
+    // ===================================
+
 });

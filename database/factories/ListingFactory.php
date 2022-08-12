@@ -21,11 +21,14 @@ class ListingFactory extends Factory
         // $this->faker->addProvider(new \Faker\Provider\zh_TW\PhoneNumber($this->faker));
         // $this->faker->addProvider(new \Faker\Provider\zh_TW\Text($this->faker));
 
-        $tag = $this->faker->randomElement(['java','php','python','javascript','react','angular','vue','jquery']);
+        $tagNum =$this->faker->randomElement([1,2,3]);
+        $tags = $this->faker->randomElements(['golang','java','php','python','javascript','react','angular','vue','jquery'],2);
+        $tagsTxt = implode(',',$tags);
+        $tag = collect($tags)->random();
         $title = $this->faker->randomElement(["junior $tag developer","senior $tag developer","$tag developer assistant"]);
         return [
             'title'=>$title,
-            'tags'=>$tag,
+            'tags'=>$tagsTxt,
             'company'=>$this->faker->company(),
             'location'=>$this->faker->city(),
             'email'=>$this->faker->unique()->companyEmail(),
