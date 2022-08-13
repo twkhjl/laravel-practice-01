@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -21,12 +22,7 @@ Route::get('/', function () {
 
 
 Route::prefix('listings')->group(function () {
-    Route::get('/', function () {
-        return view('listings', [
-            'header' => 'latest listings',
-            'listings' => Listing::all(),
-        ]);
-    })->name('listings.index');
+    Route::get('/', [ListingController::class,'index'])->name('listings.index');
 
     // Route::get('/id/{id}', function ($id) {
     //     // dd(Listing::find($id));
@@ -55,12 +51,14 @@ Route::prefix('listings')->group(function () {
     // })->name('listings.show');
 
     // 綁定後(兩段程式碼效果相同):
-    Route::get('/id/{listing}',function(Listing $listing){
-        return view('listing',[
-            'listing'=>$listing
-        ]);
-    })->name('listings.show');
+    // Route::get('/id/{listing}',function(Listing $listing){
+    //     return view('listing',[
+    //         'listing'=>$listing
+    //     ]);
+    // })->name('listings.show');
 
     // ===================================
+
+    Route::get('/id/{listing}',[ListingController::class,"show"])->name('listings.show');
 
 });
