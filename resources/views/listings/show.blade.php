@@ -1,3 +1,6 @@
+@php
+    $listings = App\Models\Listing::all();
+@endphp
 
 <x-layout>
 
@@ -11,8 +14,8 @@
 
                 <h3 class="text-2xl mb-2">{{ $listing->title }}</h3>
                 <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
-                {{-- <x-listing-tags :tagsStr="$listing->tags" :listing="$listing"></x-listing-tags> --}}
-                <x-listing-tags :listing="$listing"></x-listing-tags>
+                {{-- <x-listing-tags :listing="$listing" :listings="$listings"></x-listing-tags> --}}
+                <x-listing-tags :tagsStr="$listing->tags"></x-listing-tags>
 
 
                 <div class="text-lg my-4">
