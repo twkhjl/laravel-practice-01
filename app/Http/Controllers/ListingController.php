@@ -8,10 +8,25 @@ use Illuminate\Http\Request;
 class ListingController extends Controller
 {
     // show all listings
-    public function index(){
+    public function index(Request $request){
+        // $listings= Listing::all();
+        // if($request->tag){
+
+        //     $tag = $request->tag;
+
+        //     $listings= $listings->filter(function($listing) use($tag){
+
+        //         $tags=explode(',',$listing->tags);
+        //         if(in_array($tag,$tags)){
+        //             return $listing;
+        //         }
+
+        //     });
+        // }
+
         return view('listings.index', [
             'header' => 'latest listings',
-            'listings' => Listing::all(),
+            'listings' =>Listing::latest()->filterTag(request(['tag']))->get(),
         ]);
     }
     // show single listing
