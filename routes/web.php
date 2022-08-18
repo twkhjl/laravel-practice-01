@@ -61,4 +61,8 @@ Route::prefix('listings')->group(function () {
 
     Route::get('/id/{listing}',[ListingController::class,"show"])->name('listings.show');
 
+    Route::get('/create',[ListingController::class,"create"])->name('listings.create');
+
+    Route::post('/store',[ListingController::class,"store"])->name('listings.store');
+
 });

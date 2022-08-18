@@ -15,4 +15,6 @@
             <div>no listings found...</div>
         @endunless
 
+        <x-flash></x-flash>
+    </div>
 </x-layout>
