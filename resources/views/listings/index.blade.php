@@ -15,6 +15,9 @@
             <div>no listings found...</div>
         @endunless
 
-        <x-flash></x-flash>
+    </div>
+    <div class="py-10">
+        {{ $listings->links() }}
     </div>
 </x-layout>
+<x-flash></x-flash>
