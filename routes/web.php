@@ -65,4 +65,9 @@ Route::prefix('listings')->group(function () {
 
     Route::post('/store',[ListingController::class,"store"])->name('listings.store');
 
+    Route::get('/id/{listing}/edit',[ListingController::class,"edit"])->name('listings.edit');
+
+    Route::post('/id/{listing}/update',[ListingController::class,"update"])->name('listings.update');
+
+    Route::delete('/id/{listing}/delete',[ListingController::class,"destroy"])->name('listings.destroy');
 });

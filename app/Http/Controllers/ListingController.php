@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -114,4 +115,90 @@ class ListingController extends Controller
 
         // return redirect(route('listings.index'))->with('message','成功新增一筆資料');
     }
+    public function edit(Listing $listing){
+
+        return view('listings.edit',[
+            'listing'=>$listing
+        ]);
+    }
+    public function update(Request $request)
+    {
+        // return response()->json($request->all());
+        // return response()->json($request->input('id'));
+
+
+        // 驗證表單
+        $validator =Validator::make($request->all(),[
+
+            // 'company' => ['required', 'unique:listings'],
+            'company' => ['required'],
+
+            'title' => ['required'],
+
+            'logo'=>['image','max:1024'],
+
+        ], [
+            // 自定錯誤訊息
+
+        ],[
+            // 自定欄位在錯誤訊息中的顯示名稱
+            'company' => '公司名稱',
+            'title' => '職稱',
+            'tags' => '關鍵字',
+            'website' => '公司網站',
+            'location' => '工作地點',
+            'description' => '工作描述',
+        ]);
+
+        if ($validator->fails()) {
+
+            //只想回傳json
+            return response()->json(['errors'=>$validator->errors()]);
+        };
+
+
+        // 取得表單輸入值
+
+
+
+        $listing=Listing::find($request->input('id'));
+        $fillable=collect($listing->getFillable())->toArray();
+        $formField = $request->only($fillable);
+
+        // 處理上傳檔案
+        if($request->hasFile('logo')){
+
+            // 移除舊檔案
+            if(FacadesFile::exists(public_path('storage/'.$listing->logo))){
+                FacadesFile::delete(public_path('storage/'.$listing->logo));
+            }
+
+            // 儲存新檔案
+            $formField['logo']=$request->file('logo')->store('logos','public');
+        };
+
+        $listing->update($formField);
+
+        return response()->json(['status'=>'success']);
+
+
+
+        // return redirect(route('listings.index'))->with('message','成功新增一筆資料');
+    }
+    public function destroy(Request $request){
+        // dd($request->input('id'));
+        $listing=Listing::find($request->input('id'));
+
+        // 移除圖檔
+         if(FacadesFile::exists(public_path('storage/'.$listing->logo))){
+            FacadesFile::delete(public_path('storage/'.$listing->logo));
+        }
+
+        $listing->delete();
+
+        return redirect(route('listings.index'))->with('message','資料已刪除');
+
+
+    }
+
 }

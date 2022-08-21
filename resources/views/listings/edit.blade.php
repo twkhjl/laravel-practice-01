@@ -1,40 +1,42 @@
 <x-layout>
 
+
     <div class="mx-4">
         <x-card class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">
-                    Create a Gig
+                    Edit the Gig
                 </h2>
-                <p class="mb-4">Post a gig to find a developer</p>
+                <p class="mb-4">edit this post</p>
             </header>
 
-            <form id="formAddNewListing">
+            {{-- <form id="formEditListing" enctype="multipart/form-data"> --}}
+            <form id="formEditListing" enctype="multipart/form-data">
                 <div class="mb-6">
                     <label for="company" class="inline-block text-lg mb-2">Company Name</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="company"
-                        placeholder="請輸入公司名稱" />
+                        placeholder="請輸入公司名稱" value={{ $listing->company }} />
                     <p class="text-red-200"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="title" class="inline-block text-lg mb-2">Job Title</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
-                        placeholder="Example: Senior Laravel Developer" />
+                        placeholder="Example: Senior Laravel Developer" value="{{ $listing->title }}" />
                     <p class="text-red-200"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="location" class="inline-block text-lg mb-2">Job Location</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="location"
-                        placeholder="Example: Remote, Boston MA, etc" />
+                        placeholder="Example: Remote, Boston MA, etc" value="{{ $listing->location }}" />
                     <p class="text-red-200"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="email" class="inline-block text-lg mb-2">Contact Email</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="email"
-                        placeholder="聯絡信箱" />
+                        placeholder="聯絡信箱" value="{{ $listing->email }}" />
                     <p class="text-red-200"></p>
                 </div>
 
@@ -42,7 +44,9 @@
                     <label for="website" class="inline-block text-lg mb-2">
                         Website/Application URL
                     </label>
-                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="website" />
+                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="website"
+                        value="{{ $listing->website }}" />
+
                     <p class="text-red-200"></p>
                 </div>
 
@@ -51,7 +55,7 @@
                         Tags (Comma Separated)
                     </label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tags"
-                        placeholder="Example: Laravel, Backend, Postgres, etc" />
+                        placeholder="Example: Laravel, Backend, Postgres, etc" value="{{ $listing->tags }}" />
                     <p class="text-red-200"></p>
                 </div>
 
@@ -62,8 +66,10 @@
                     <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo"
                         id="logo" />
                     <p class="text-red-200"></p>
-                    <img class="w-48 mr-6 mb-6" id="imgPreview" src="{{ asset('images/no-image.png') }}"
+                    <img class="w-48 mr-6 mb-6" id="imgPreview"
+                        src="{{ $listing->logo ? asset('storage/' . $listing->logo) : asset('images/no-image.png') }}"
                         alt="" />
+
                 </div>
 
                 <div class="mb-6">
@@ -71,13 +77,13 @@
                         Job Description
                     </label>
                     <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10"
-                        placeholder="Include tasks, requirements, salary, etc"></textarea>
+                        placeholder="Include tasks, requirements, salary, etc" value="{{ $listing->description }}"></textarea>
                     <p class="text-red-200"></p>
                 </div>
 
                 <div class="mb-6">
-                    <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black" id="btnAddNewListing">
-                        Create Gig
+                    <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black" id="btnEditListing">
+                        update Gig
                     </button>
 
                     <a href="/" class="text-black ml-4"> Back </a>
@@ -87,7 +93,8 @@
     </div>
 
 </x-layout>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
 
 <script>
     logo.onchange = evt => {
@@ -96,18 +103,18 @@
             imgPreview.src = URL.createObjectURL(file)
         }
     }
-    $('#btnAddNewListing').on('click',
+    $('#btnEditListing').on('click',
         function(e) {
             e.preventDefault();
 
             // 清除錯誤訊息
-            $('#formAddNewListing input+p').text("");
+            $('#formEditListing input+p').text("");
 
-            const URL_ADD_NEW_LISTING = "{{ route('listings.store') }}";
+            const URL = "{{ route('listings.update', ['listing' => $listing]) }}";
 
             // https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
 
-            var data = new FormData();
+            let data = new FormData();
 
             // 設定csrf token
             data.append('_token', "{{ csrf_token() }}");
@@ -118,22 +125,37 @@
             }
 
             // 將表單中除logo外的欄位全部存入data中
-            let x = $("#formAddNewListing").serializeArray();
+            let x = $("#formEditListing").serializeArray();
             $.each(x, function(v) {
                 data.append(x[v].name, x[v].value);
 
             });
 
+            // 加上id
+            data.append('id', "{{ $listing->id }}");
+
+            // for (const value of data.values()) {
+            //     console.log(value);
+            // }
+
+
+
+
+
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    // 'content-type':'application/json',
                 }
             });
             $.ajax({
-                url: URL_ADD_NEW_LISTING,
-                type: "POST",
+                url: URL,
+                type: "post",
                 data: data,
-                dataType: 'json',
+                // dataType: 'json',
+                // mimeType: 'multipart/form-data',
+                // cache:false,
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
                 success: function(response) {
@@ -143,11 +165,11 @@
 
                         for (let o in errors) {
                             // console.log(errors[o][0]);
-                            $('#formAddNewListing input[name="' + o + '"]+p').text(errors[o][0]);
+                            $('#formEditListing input[name="' + o + '"]+p').text(errors[o][0]);
                         }
                     }
                     if (response.status == "success") {
-                        window.location.href = "{{ route('listings.index') }}";
+                        window.location.href = "{{ route('listings.show', ['listing' => $listing]) }}";
                     }
 
 
