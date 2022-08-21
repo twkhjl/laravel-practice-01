@@ -17,7 +17,7 @@
 
     </div>
     <div class="py-10 px-8">
-        {{ $listings->links() }}
+        {{ $listings->links("vendor.pagination.tailwind") }}
     </div>
 </x-layout>
 <x-flash></x-flash>
