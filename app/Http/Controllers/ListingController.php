@@ -31,8 +31,8 @@ class ListingController extends Controller
         return view('listings.index', [
             'header' => 'latest listings',
             // 'listings' => Listing::latest()->filterTag(request(['tag', 'search']))->get(),
-            // 'listings' => Listing::latest()->filterTag(request(['tag', 'search']))->paginate(6),
-            'listings' => Listing::paginate(6),
+            'listings' => Listing::latest()->filterTag(request(['tag', 'search']))->paginate(6),
+            // 'listings' => Listing::paginate(6),
         ]);
     }
     // show single listing
@@ -53,6 +53,7 @@ class ListingController extends Controller
             // 'company'=>['required',Rule::unique('listings','company')],
             // 'company'=>'required|unique:listings',
             'company' => ['required', 'unique:listings'],
+
             'title' => ['required'],
             // 'email' => ['required', 'email'],
             // 'tags' => ['required'],
@@ -61,9 +62,10 @@ class ListingController extends Controller
             // 'description' => ['required'],
         ], [
             // 自定錯誤訊息
-            'company.unique'=>'"'.$request->input('company').'"'.'已被使用',
-            'required' => ':attribute不可空白',
-            'email' => '請輸入有效的email格式',
+
+            // 'company.unique'=>'"'.$request->input('company').'"'.'已被使用',
+            // 'required' => ':attribute不可空白',
+            // 'email' => '請輸入有效的email格式',
         ],[
             // 自定欄位在錯誤訊息中的顯示名稱
             'company' => '公司名稱',

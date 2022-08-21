@@ -13,12 +13,12 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
-    'showing'=>'showing',
-    'to'=>'to',
-    'of'=>'of',
-    'results'=>'results',
-    'currentlyshowing'=>'currently showing',
+    'previous' => '&laquo;',
+    'next' => '&raquo;',
+    'showing'=>'顯示',
+    'to'=>'到',
+    'of'=>'項,全部總計',
+    'results'=>'項',
+    'currentlyshowing'=>'目前顯示',
 
 ];

@@ -16,7 +16,7 @@
         @endunless
 
     </div>
-    <div class="py-10">
+    <div class="py-10 px-8">
         {{ $listings->links() }}
     </div>
 </x-layout>
