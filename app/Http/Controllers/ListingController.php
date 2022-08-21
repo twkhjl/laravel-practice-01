@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
+
 
 class ListingController extends Controller
 {
@@ -48,13 +50,22 @@ class ListingController extends Controller
     }
     public function store(Request $request)
     {
+        // return response()->json($request->all());
 
-        $formField = $request->validate([
+        // 驗證表單
+        $validator =Validator::make($request->all(),[
+
             // 'company'=>['required',Rule::unique('listings','company')],
             // 'company'=>'required|unique:listings',
             'company' => ['required', 'unique:listings'],
 
             'title' => ['required'],
+
+            // 'logo'=>['mimes:jpg,jpeg,png','max:1024'],
+            // 'logo'=>['image','max:1024','dimensions:max_width=300,max_height=218'],
+            // 'logo'=>['image','max:1024','dimensions:width=640,height=915'],
+            'logo'=>['image','max:1024'],
+
             // 'email' => ['required', 'email'],
             // 'tags' => ['required'],
             // 'website' => ['required'],
@@ -76,8 +87,31 @@ class ListingController extends Controller
             'description' => '工作描述',
         ]);
 
+        if ($validator->fails()) {
+
+            //只想回傳json
+            return response()->json(['errors'=>$validator->errors()]);
+        };
+
+
+        // 取得表單輸入值
+        $listing = new Listing();
+        $fillable=collect($listing->getFillable())->toArray();
+        $formField = $request->only($fillable);
+
+
+
+        // 處理上傳檔案
+        if($request->hasFile('logo')){
+            $formField['logo']=$request->file('logo')->store('logos','public');
+        };
+
         Listing::create($formField);
 
-        return redirect(route('listings.index'))->with('message','成功新增一筆資料');
+        return response()->json(['status'=>'success']);
+
+
+
+        // return redirect(route('listings.index'))->with('message','成功新增一筆資料');
     }
 }
