@@ -75,7 +75,12 @@ Route::prefix('listings')->group(function () {
 Route::prefix('users')->group(function () {
 
     Route::get('/register',[UserController::class,"register"])->name('users.register');
-    Route::get('/store',[UserController::class,"store"])->name('users.store');
+    Route::post('/store',[UserController::class,"store"])->name('users.store');
+
+    Route::post('/logout',[UserController::class,"logout"])->name('users.logout');
+    Route::get('/login',[UserController::class,"login"])->name('users.login');
+    Route::post('/authenticate',[UserController::class,"authenticate"])->name('users.authenticate');
+
 
 });
 
