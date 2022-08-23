@@ -35,4 +35,7 @@ class Listing extends Model
                 ->orWhere('tags', 'like', '%' . request('search') . '%');
         }
     }
+    public function users(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

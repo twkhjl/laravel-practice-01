@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -22,6 +23,7 @@ Route::get('/', function () {
 
 
 Route::prefix('listings')->group(function () {
+
     Route::get('/', [ListingController::class,'index'])->name('listings.index');
 
     // Route::get('/id/{id}', function ($id) {
@@ -60,14 +62,21 @@ Route::prefix('listings')->group(function () {
     // ===================================
 
     Route::get('/id/{listing}',[ListingController::class,"show"])->name('listings.show');
-
     Route::get('/create',[ListingController::class,"create"])->name('listings.create');
-
     Route::post('/store',[ListingController::class,"store"])->name('listings.store');
-
     Route::get('/id/{listing}/edit',[ListingController::class,"edit"])->name('listings.edit');
-
     Route::post('/id/{listing}/update',[ListingController::class,"update"])->name('listings.update');
-
     Route::delete('/id/{listing}/delete',[ListingController::class,"destroy"])->name('listings.destroy');
+
+
 });
+
+
+Route::prefix('users')->group(function () {
+
+    Route::get('/register',[UserController::class,"register"])->name('users.register');
+    Route::get('/store',[UserController::class,"store"])->name('users.store');
+
+});
+
+

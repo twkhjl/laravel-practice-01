@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ListingFactory extends Factory
@@ -26,7 +27,12 @@ class ListingFactory extends Factory
         $tagsTxt = implode(',',$tags);
         $tag = collect($tags)->random();
         $title = $this->faker->randomElement(["junior $tag developer","senior $tag developer","$tag developer assistant"]);
+
+        $user_ids = User::pluck('id');
+        $user_id = $this->faker->randomElement($user_ids);
+
         return [
+            'user_id'=>$user_id,
             'title'=>$title,
             'tags'=>$tagsTxt,
             'company'=>$this->faker->company(),
