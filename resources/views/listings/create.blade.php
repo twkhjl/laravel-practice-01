@@ -147,6 +147,11 @@
                         }
                     }
                     if (response.status == "success") {
+
+                        @php
+                        session(['message' => '已成功新建職缺']);
+                        @endphp
+
                         window.location.href = "{{ route('listings.index') }}";
                     }
 

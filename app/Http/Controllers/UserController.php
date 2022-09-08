@@ -72,9 +72,9 @@ class UserController extends Controller
         if(auth()->attempt($formField)){
 
             $request->session()->regenerate();
-            // auth()->login($user);
             return redirect(route('listings.index'))->with('message', 'user logged in');
         }
+
         return back()->withErrors([
             'email'=>'郵箱或密碼錯誤'
             ])->onlyInput();
