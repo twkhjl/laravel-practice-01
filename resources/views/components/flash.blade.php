@@ -9,9 +9,14 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
 
-    class="fixed top-0 left-1/2 transform-translate-x-1/2 bg-laravel text-white px-48 py-3">
+    class="fixed w-1/3 left-1/3 text-center bg-teal-600 text-white p-2 text-4xl top-10 shadow-lg shadow-black">
         <p>
             {{ session('message') }}
     </div>
     </p>
+
+    @php
+    session()->forget('message');
+    @endphp
+
 @endif

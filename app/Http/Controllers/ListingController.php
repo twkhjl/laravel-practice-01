@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\User;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File as FacadesFile;
@@ -220,4 +221,20 @@ class ListingController extends Controller
 
 		return redirect(route('listings.index'))->with('message', '資料已刪除');
 	}
+
+    public function manage(Request $request){
+
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]);
+
+        // $user_id=$request->user_id;
+
+        // $user = User::find($user_id);
+
+        // $user_listings = $user->listings();
+
+        // return view('listings.manage',[
+        //     'user_listings'=>$user_listings
+        // ]);
+
+    }
 }

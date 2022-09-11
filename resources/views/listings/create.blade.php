@@ -153,6 +153,10 @@
                         @endphp
 
                         window.location.href = "{{ route('listings.index') }}";
+
+
+
+
                     }
 
 

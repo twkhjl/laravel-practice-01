@@ -169,7 +169,11 @@
                         }
                     }
                     if (response.status == "success") {
-                        window.location.href = "{{ route('listings.show', ['listing' => $listing]) }}";
+                        @php
+                        session(['message' => '已成功更新職缺']);
+                        @endphp
+
+                        window.location.href = "{{ route('listings.manage', ['listing' => $listing,'user_id'=>auth()->user()->id]) }}";
                     }
 
 

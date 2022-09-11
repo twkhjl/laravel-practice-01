@@ -35,6 +35,11 @@
                     <h3>{{ auth()->user()->name }}</h3>
                 </li>
                 <li>
+                    <a href="{{ route('listings.manage',['user_id'=>auth()->user()->id]) }}" class="hover:text-laravel"
+                        ><i class="fa-solid fa-gear"></i> Manage Gigs</a
+                    >
+                </li>
+                <li>
                     <form action="{{ route('users.logout') }}" method="post">
                         @csrf
                         <button class="hover:text-laravel" type="submit">

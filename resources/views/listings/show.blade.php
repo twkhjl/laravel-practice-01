@@ -44,15 +44,6 @@ $listings = App\Models\Listing::all();
                 </div>
             </div>
         </x-card>
-        <h2><a href={{ route('listings.edit', ['listing' => $listing]) }}>edit</a></h2>
-        <form action="{{ route('listings.destroy', ['listing' => $listing]) }}" method="post">
-            @csrf
-            @method('delete')
-            <input type="hidden" value="{{ $listing->id }}" name="id">
-            <button>delete</button>
-
-        </form>
-
 
     </div>
 
