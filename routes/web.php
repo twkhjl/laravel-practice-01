@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -85,3 +86,6 @@ Route::prefix('users')->group(function () {
     Route::get('/login', [UserController::class, "login"])->name('users.login');
     Route::post('/authenticate', [UserController::class, "authenticate"])->name('users.authenticate');
 });
+
+
+Route::post('/redirect',[RedirectController::class,"flash"])->name('redirect.flash');

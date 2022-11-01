@@ -4,8 +4,8 @@ $listings = App\Models\Listing::all();
 
 <x-layout>
 
-    <a href={{ route('listings.index') }} class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i>
-        Back
+    <a href={{ url()->previous() }} class="inline-block text-black ml-4 mb-4"><i class="fa-solid fa-arrow-left"></i>
+        上一頁
     </a>
     <div class="mx-4">
         <x-card class="p-10">
@@ -26,20 +26,19 @@ $listings = App\Models\Listing::all();
                 <div class="border border-gray-200 w-full mb-6"></div>
                 <div>
                     <h3 class="text-3xl font-bold mb-4">
-                        Job Description
+                        職缺描述
                     </h3>
                     <div class="text-lg space-y-6">
                         <p>{{ $listing->description }}</p>
 
                         <a href="mailto:test@test.com"
-                            class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"><i
+                            class="block bg-main text-white mt-6 py-2 rounded-xl hover:opacity-80"><i
                                 class="fa-solid fa-envelope"></i>
-                            Contact Employer</a>
+                            我要聯絡</a>
 
                         <a href="https://test.com" target="_blank"
                             class="block bg-black text-white py-2 rounded-xl hover:opacity-80"><i
-                                class="fa-solid fa-globe"></i> Visit
-                            Website</a>
+                                class="fa-solid fa-globe"></i> 造訪網站</a>
                     </div>
                 </div>
             </div>

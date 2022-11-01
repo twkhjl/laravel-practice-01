@@ -4,16 +4,16 @@
         <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">
-                    Register
+                    註冊
                 </h2>
-                <p class="mb-4">Create an account to post gigs</p>
+                <p class="mb-4">註冊以新增職缺</p>
             </header>
 
             <form action="{{ route('users.store') }}" method="POST">
                 @csrf
                 <div class="mb-6">
                     <label for="name" class="inline-block text-lg mb-2">
-                        Name
+                        用戶名
                     </label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name" value="{{ old('name') }}"/>
                     @error('name')
@@ -31,7 +31,7 @@
 
                 <div class="mb-6">
                     <label for="password" class="inline-block text-lg mb-2">
-                        Password
+                        密碼
                     </label>
                     <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password" />
                     @error('password')
@@ -41,21 +41,21 @@
 
                 <div class="mb-6">
                     <label for="password2" class="inline-block text-lg mb-2">
-                        Confirm Password
+                        確認密碼
                     </label>
                     <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password_confirmation" />
                 </div>
 
                 <div class="mb-6">
-                    <button type="submit" class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                        Sign Up
+                    <button type="submit" class="bg-main text-white rounded py-2 px-4 hover:bg-black">
+                        註冊
                     </button>
                 </div>
 
                 <div class="mt-8">
                     <p>
-                        Already have an account?
-                        <a href="login.html" class="text-laravel">Login</a>
+                        已有帳號?
+                        <a href="{{ route('users.login') }}" class="text-main">登入</a>
                     </p>
                 </div>
             </form>

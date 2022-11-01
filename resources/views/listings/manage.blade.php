@@ -5,11 +5,18 @@
         <div class="bg-gray-50 border border-gray-200 p-10 rounded">
             <header>
                 <h1 class="text-3xl text-center font-bold my-6 uppercase">
-                    Manage Gigs
+                    管理職缺
                 </h1>
             </header>
 
-            <table class="w-full table-auto rounded-sm">
+            <a href="{{ route('listings.create',["src"=>"listings.manage"]) }}"
+                class="transition-all duration-200 mt-10 text-2xl rounded-sm bg-gray-600 hover:bg-gray-300 text-white hover:text-black shadow-sm shadow-black px-4 py-2">新增職缺</a>
+
+            @if ($listings->count() <= 0)
+                <div class="mt-10 text-xl">目前無任何職缺...</div>
+            @endif
+
+            <table class="w-full table-auto rounded-sm mt-10">
 
 
                 <tbody>
@@ -17,14 +24,14 @@
                     @foreach ($listings as $listing)
                         <tr class="border-gray-300">
                             <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                                <a href="show.html">
+                                <a href="{{ route('listings.show',['listing'=>$listing]) }}">
                                     {{ $listing->title }}
                                 </a>
                             </td>
                             <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
                                 <a href="{{ route('listings.edit', ['listing' => $listing]) }}"
                                     class="text-blue-400 px-6 py-2 rounded-xl"><i class="fa-solid fa-pen-to-square"></i>
-                                    Edit</a>
+                                    編輯</a>
                             </td>
                             <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
                                 <form action="{{ route('listings.destroy', ['listing' => $listing]) }}" method="post">
@@ -33,37 +40,12 @@
                                     <input type="hidden" value="{{ $listing->id }}" name="id">
                                     <button class="text-red-600">
                                         <i class="fa-solid fa-trash-can"></i>
-                                        Delete
+                                        刪除
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
-
-                    <tr class="border-gray-300">
-                        <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                            <a href="show.html">
-                                Laravel Senior Developer
-                            </a>
-                        </td>
-                        <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                            <a href="{{ route('listings.edit', ['listing' => $listing]) }}"
-                                class="text-blue-400 px-6 py-2 rounded-xl"><i class="fa-solid fa-pen-to-square"></i>
-                                Edit</a>
-                        </td>
-                        <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                            <form action="">
-                                <button class="text-red-600">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    Delete
-                                </button>
-                            </form>
-
-                        </td>
-                    </tr>
-
-
-
 
                 </tbody>
             </table>

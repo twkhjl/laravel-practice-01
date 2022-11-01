@@ -2,14 +2,14 @@
     <x-hero></x-hero>
     <x-search></x-search>
 
-    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+    <div class="flex flex-col lg:grid lg:grid-cols-2 gap-[20px] space-y-2 md:space-y-0 mx-4">
 
         @unless(count($listings) == 0)
             @foreach ($listings as $listing)
                 <x-listing-card :listing="$listing"></x-listing-card>
             @endforeach
         @else
-            <div>no listings found...</div>
+            <div>目前無任何職缺...</div>
         @endunless
 
     </div>

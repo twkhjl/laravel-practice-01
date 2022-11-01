@@ -92,6 +92,8 @@ return [
     */
 
     'custom' => [
+        'companyjob'=>'該公司提供的該職缺名稱已經存在',
+
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],

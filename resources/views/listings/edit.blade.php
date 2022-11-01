@@ -1,3 +1,7 @@
+@php
+    session()->forget('message');
+@endphp
+
 <x-layout>
 
 
@@ -5,9 +9,9 @@
         <x-card class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24">
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">
-                    Edit the Gig
+                    編輯職缺
                 </h2>
-                <p class="mb-4">edit this post</p>
+                <p class="mb-4">修改下方內容進行編輯</p>
             </header>
 
             {{-- <form id="formEditListing" enctype="multipart/form-data"> --}}
@@ -16,28 +20,28 @@
                     <label for="company" class="inline-block text-lg mb-2">Company Name</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="company"
                         placeholder="請輸入公司名稱" value={{ $listing->company }} />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="title" class="inline-block text-lg mb-2">Job Title</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
                         placeholder="Example: Senior Laravel Developer" value="{{ $listing->title }}" />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="location" class="inline-block text-lg mb-2">Job Location</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="location"
                         placeholder="Example: Remote, Boston MA, etc" value="{{ $listing->location }}" />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
                     <label for="email" class="inline-block text-lg mb-2">Contact Email</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="email"
                         placeholder="聯絡信箱" value="{{ $listing->email }}" />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
@@ -47,7 +51,7 @@
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="website"
                         value="{{ $listing->website }}" />
 
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
@@ -56,7 +60,7 @@
                     </label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tags"
                         placeholder="Example: Laravel, Backend, Postgres, etc" value="{{ $listing->tags }}" />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
@@ -65,7 +69,7 @@
                     </label>
                     <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo"
                         id="logo" />
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                     <img class="w-48 mr-6 mb-6" id="imgPreview"
                         src="{{ $listing->logo ? asset('storage/' . $listing->logo) : asset('images/no-image.png') }}"
                         alt="" />
@@ -78,15 +82,15 @@
                     </label>
                     <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10"
                         placeholder="Include tasks, requirements, salary, etc" value="{{ $listing->description }}"></textarea>
-                    <p class="text-red-200"></p>
+                    <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
-                    <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black" id="btnEditListing">
-                        update Gig
+                    <button class="bg-main text-white rounded py-2 px-4 hover:bg-black" id="btnEditListing">
+                        更新職缺
                     </button>
 
-                    <a href="/" class="text-black ml-4"> Back </a>
+                    <a href="{{ url()->previous() }}" class="text-black ml-4"> 返回 </a>
                 </div>
             </form>
         </x-card>
@@ -170,10 +174,11 @@
                     }
                     if (response.status == "success") {
                         @php
-                        session(['message' => '已成功更新職缺']);
+                            session()('message' , '職缺已更新');
                         @endphp
 
-                        window.location.href = "{{ route('listings.manage', ['listing' => $listing,'user_id'=>auth()->user()->id]) }}";
+                        window.location.href =
+                            "{{ route('listings.manage', ['listing' => $listing, 'user_id' => auth()->user()->id]) }}";
                     }
 
 

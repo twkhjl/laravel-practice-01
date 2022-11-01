@@ -16,13 +16,18 @@
             theme: {
                 extend: {
                     colors: {
-                        laravel: "#ef3b2d",
+                        main: "#22BF7D",
                     },
+                    backgroundImage: {
+                        'banner': "url({{ asset('images/banner-image.png') }})",
+                    },
+
                 },
             },
+
         };
     </script>
-    <title>LaraGigs | Find Laravel Jobs & Projects</title>
+    <title>找職缺</title>
 </head>
 
 <body class="mb-48">
@@ -32,30 +37,29 @@
         <ul class="flex space-x-6 mr-6 text-lg">
             @auth
                 <li>
-                    <h3>{{ auth()->user()->name }}</h3>
+                    歡迎,<span>{{ auth()->user()->name }}</span>
                 </li>
                 <li>
-                    <a href="{{ route('listings.manage',['user_id'=>auth()->user()->id]) }}" class="hover:text-laravel"
-                        ><i class="fa-solid fa-gear"></i> Manage Gigs</a
-                    >
+                    <a href="{{ route('listings.manage', ['user_id' => auth()->user()->id]) }}" class="hover:text-main"><i
+                            class="fa-solid fa-gear"></i> 管理職缺</a>
                 </li>
                 <li>
                     <form action="{{ route('users.logout') }}" method="post">
                         @csrf
-                        <button class="hover:text-laravel" type="submit">
-                            <i class="fa-solid fa-door-closed"></i>Logout
+                        <button class="hover:text-main" type="submit">
+                            <i class="fa-solid fa-door-closed"></i>登出
                         </button>
                     </form>
                 </li>
             @else
                 <li>
-                    <a href="{{ route('users.register') }}" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i>
-                        Register</a>
+                    <a href="{{ route('users.register') }}" class="hover:text-main"><i class="fa-solid fa-user-plus"></i>
+                        註冊</a>
                 </li>
                 <li>
-                    <a href="{{ route('users.login') }}" class="hover:text-laravel"><i
+                    <a href="{{ route('users.login') }}" class="hover:text-main"><i
                             class="fa-solid fa-arrow-right-to-bracket"></i>
-                        Login</a>
+                        登入</a>
                 </li>
             @endauth
         </ul>
@@ -70,11 +74,16 @@
     </main>
 
     <footer
-        class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-emerald-500 text-white h-24 mt-24 opacity-90 md:justify-center">
+        class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-emerald-800 text-white h-24 mt-24 opacity-90 md:justify-center">
         <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
 
-        <a href={{ route('listings.create') }} class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">Post
-            Job</a>
+        @if (Request::route()->getName()=='listings.manage')
+            <a href={{ route('listings.create',['src'=>'listings.manage']) }}
+                class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">新增職缺</a>
+        @else
+            <a href={{ route('listings.create') }}
+                class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">新增職缺</a>
+        @endif
     </footer>
 </body>
 

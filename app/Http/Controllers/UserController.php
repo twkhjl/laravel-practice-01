@@ -43,7 +43,7 @@ class UserController extends Controller
         auth()->login($user);
         // Auth::login($user);
 
-        return redirect(route('listings.index'))->with('message', 'user created');
+        return redirect(route('listings.index'))->with('message', '註冊成功');
     }
 
     public function logout(Request $request){
@@ -55,7 +55,7 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
 
-        return redirect(route('listings.index'))->with('message', 'user logged out');
+        return redirect(route('listings.index'))->with('message', '已成功登出');
 
     }
 
@@ -72,7 +72,7 @@ class UserController extends Controller
         if(auth()->attempt($formField)){
 
             $request->session()->regenerate();
-            return redirect(route('listings.index'))->with('message', 'user logged in');
+            return redirect(route('listings.index'))->with('message', '成功登入');
         }
 
         return back()->withErrors([
