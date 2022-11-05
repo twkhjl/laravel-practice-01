@@ -17,28 +17,28 @@
             {{-- <form id="formEditListing" enctype="multipart/form-data"> --}}
             <form id="formEditListing" enctype="multipart/form-data">
                 <div class="mb-6">
-                    <label for="company" class="inline-block text-lg mb-2">Company Name</label>
+                    <label for="company" class="inline-block text-lg mb-2">公司名稱</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="company"
                         placeholder="請輸入公司名稱" value={{ $listing->company }} />
                     <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
-                    <label for="title" class="inline-block text-lg mb-2">Job Title</label>
+                    <label for="title" class="inline-block text-lg mb-2">職務名稱</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
                         placeholder="Example: Senior Laravel Developer" value="{{ $listing->title }}" />
                     <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
-                    <label for="location" class="inline-block text-lg mb-2">Job Location</label>
+                    <label for="location" class="inline-block text-lg mb-2">工作地點</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="location"
                         placeholder="Example: Remote, Boston MA, etc" value="{{ $listing->location }}" />
                     <p class="text-red-600"></p>
                 </div>
 
                 <div class="mb-6">
-                    <label for="email" class="inline-block text-lg mb-2">Contact Email</label>
+                    <label for="email" class="inline-block text-lg mb-2">聯絡信箱</label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="email"
                         placeholder="聯絡信箱" value="{{ $listing->email }}" />
                     <p class="text-red-600"></p>
@@ -46,7 +46,7 @@
 
                 <div class="mb-6">
                     <label for="website" class="inline-block text-lg mb-2">
-                        Website/Application URL
+                        網頁連結
                     </label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="website"
                         value="{{ $listing->website }}" />
@@ -56,7 +56,7 @@
 
                 <div class="mb-6">
                     <label for="tags" class="inline-block text-lg mb-2">
-                        Tags (Comma Separated)
+                        標籤(用逗號分開)
                     </label>
                     <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tags"
                         placeholder="Example: Laravel, Backend, Postgres, etc" value="{{ $listing->tags }}" />
@@ -65,7 +65,7 @@
 
                 <div class="mb-6">
                     <label for="logo" class="inline-block text-lg mb-2">
-                        Company Logo
+                        公司Logo
                     </label>
                     <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo"
                         id="logo" />
@@ -78,7 +78,7 @@
 
                 <div class="mb-6">
                     <label for="description" class="inline-block text-lg mb-2">
-                        Job Description
+                        職缺描述
                     </label>
                     <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10"
                         placeholder="Include tasks, requirements, salary, etc" value="{{ $listing->description }}"></textarea>
@@ -170,12 +170,15 @@
                         for (let o in errors) {
                             // console.log(errors[o][0]);
                             $('#formEditListing input[name="' + o + '"]+p').text(errors[o][0]);
+                            if(o=='description') {
+                                $('#formEditListing textarea[name="' + o + '"]+p').text(errors[o][0]);
+                            }
                         }
                     }
                     if (response.status == "success") {
-                        @php
-                            session()('message' , '職缺已更新');
-                        @endphp
+                        // @php
+                        //     session()('message' , '職缺已更新');
+                        // @endphp
 
                         window.location.href =
                             "{{ route('listings.manage', ['listing' => $listing, 'user_id' => auth()->user()->id]) }}";
